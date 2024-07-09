@@ -53,6 +53,9 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!this.gameObject.scene.isLoaded)
+            return;
+
         FruitHandler.Instance.OnFruitListGenerated.RemoveListener(UpdateListUI);
         GameManager.Instance.OnScoreChanged.RemoveListener(UpdateScoreUI);
     }
