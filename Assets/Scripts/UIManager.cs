@@ -69,4 +69,5 @@ public class UIManager : MonoBehaviour
             _upcomingFruitsImageList[i].sprite = _fruitList[i].GetComponent<Fruit>().fruitSprite;
         }
     }
+
 }

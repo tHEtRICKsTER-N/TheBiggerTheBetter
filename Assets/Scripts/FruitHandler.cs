@@ -60,6 +60,8 @@ public class FruitHandler : MonoBehaviour
     [SerializeField] private GameObject _strawberryFruit;
     [SerializeField] private GameObject _tangerineFruit;
 
+    [SerializeField] private Transform _spawnPoint;
+
     [Header("List of Upcoming Fruits")]
     private List<GameObject> _fruitList = new List<GameObject>();
 
@@ -122,8 +124,28 @@ public class FruitHandler : MonoBehaviour
         //show them in the upcoming list
 
         _fruitList = list;
+        SpawnLatestFruit();
         OnFruitListGenerated?.Invoke(_fruitList);
     }
+
+    private void ShiftFruits()
+    {
+        var temp = _fruitList[1];
+        _fruitList[0] = _fruitList[1];
+        temp = _fruitList[2];
+
+        _fruitList[2] = GetFruitRefByEnum(GetRandomFruitType());
+        OnFruitListGenerated?.Invoke(_fruitList);
+    }
+
+    private GameObject SpawnLatestFruit()
+    {
+        var obj = Instantiate(_fruitList[0], _spawnPoint.position, Quaternion.identity);
+
+        ShiftFruits();
+        return obj;
+    }
+
 
     #endregion
 }

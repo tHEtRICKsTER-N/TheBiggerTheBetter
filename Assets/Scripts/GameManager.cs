@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -55,11 +55,18 @@ public class GameManager : MonoBehaviour
     #region Events
 
     public CustomEvents.IntEvent OnScoreChanged;
+    public event Action OnGameStart;
+    public event Action OnGameEnd;
 
     #endregion
 
 
     #region Functions
+
+    private void Start()
+    {
+        _gameOver = false;
+    }
 
     public void IncrementScore(int value)
     {
@@ -67,10 +74,15 @@ public class GameManager : MonoBehaviour
         OnScoreChanged?.Invoke(_score);
     }
 
+    public void SetScore(int value)
+    {
+        _score = value;
+        OnScoreChanged?.Invoke(_score);
+    }
+
     public bool IsGameOver() => _gameOver;
 
     public void SetGameOver(bool gameOver) => _gameOver = gameOver;
-
 
     #endregion
 
