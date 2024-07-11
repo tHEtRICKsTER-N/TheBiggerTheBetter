@@ -1802,7 +1802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd51be480b49c04e99f8687408f2ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnFruitListGenerated:
+  OnFruitListUpdated:
     m_PersistentCalls:
       m_Calls: []
   _appleFruit: {fileID: 94560544885367848, guid: 2ac434f31560ec74b895ad425554f9bd, type: 3}
@@ -1816,6 +1816,7 @@ MonoBehaviour:
   _strawberryFruit: {fileID: 8579814046389817933, guid: 1c0c639a0717e0748acfa220576f950d, type: 3}
   _tangerineFruit: {fileID: 7441794678259163080, guid: f0cdff590363b804b87aa8e17ec0f2d9, type: 3}
   _spawnPoint: {fileID: 1554013364}
+  _upcomingSize: 3
 --- !u!4 &1087139654
 Transform:
   m_ObjectHideFlags: 0
@@ -2139,11 +2140,11 @@ RectTransform:
   - {fileID: 1460016989}
   m_Father: {fileID: 814333443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 500}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 300, y: 150}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &1458381157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2190,7 +2191,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1087139653}
         m_TargetAssemblyTypeName: FruitHandler, Assembly-CSharp
-        m_MethodName: GenerateRandomFruitList
+        m_MethodName: GenerateNewFruit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.OnScoreChanged.AddListener(UpdateScoreUI);
-        FruitHandler.Instance.OnFruitListGenerated.AddListener(UpdateListUI);
+        FruitHandler.Instance.OnFruitListUpdated.AddListener(UpdateListUI);
     }
 
     private void OnDisable()
@@ -56,17 +56,19 @@ public class UIManager : MonoBehaviour
         if (!this.gameObject.scene.isLoaded)
             return;
 
-        FruitHandler.Instance.OnFruitListGenerated.RemoveListener(UpdateListUI);
+        FruitHandler.Instance.OnFruitListUpdated.RemoveListener(UpdateListUI);
         GameManager.Instance.OnScoreChanged.RemoveListener(UpdateScoreUI);
     }
 
     private void UpdateScoreUI(int _score) { _scoreText.text = _score.ToString(); }
 
-    private void UpdateListUI(List<GameObject> _fruitList)
+    private void UpdateListUI(Queue<GameObject> _fruitList)
     {
-        for (int i = 0; i < 3; ++i)
+        int i = 0;
+        foreach (GameObject _fruit in _fruitList)
         {
-            _upcomingFruitsImageList[i].sprite = _fruitList[i].GetComponent<Fruit>().fruitSprite;
+            _upcomingFruitsImageList[i].sprite = _fruit.GetComponent<Fruit>().fruitSprite;
+            i++;
         }
     }
 

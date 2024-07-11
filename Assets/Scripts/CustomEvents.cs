@@ -9,6 +9,6 @@ public class CustomEvents : MonoBehaviour
     public class IntEvent : UnityEvent<int> { }
 
     [System.Serializable]
-    public class FruitListEvent : UnityEvent<List<GameObject>> { }
+    public class FruitListEvent : UnityEvent<Queue<GameObject>> { }
 
 }

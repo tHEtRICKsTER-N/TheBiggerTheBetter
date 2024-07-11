@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FruitHandler : MonoBehaviour
@@ -42,7 +43,7 @@ public class FruitHandler : MonoBehaviour
 
     #region Events
 
-    public CustomEvents.FruitListEvent OnFruitListGenerated;
+    public CustomEvents.FruitListEvent OnFruitListUpdated;
 
     #endregion
 
@@ -61,9 +62,13 @@ public class FruitHandler : MonoBehaviour
     [SerializeField] private GameObject _tangerineFruit;
 
     [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private int _upcomingSize;
 
-    [Header("List of Upcoming Fruits")]
-    private List<GameObject> _fruitList = new List<GameObject>();
+    [Header("Queue of Upcoming Fruits")]
+    private Queue<GameObject> _fruitList = new Queue<GameObject>();
+
+    private Fruit _currentFruit;
+    Vector2 mousePos;
 
     #endregion
 
@@ -72,6 +77,35 @@ public class FruitHandler : MonoBehaviour
     private void Start()
     {
         GenerateRandomFruitList();
+    }
+
+    private void Update()
+    {
+        if (!_currentFruit.isDropped)
+        {
+            //we will try to find a location to drop it
+            //fruit will follow the player's finger position
+
+            if (Input.GetMouseButton(0))
+            {
+                mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePos = new Vector2(Mathf.Clamp(mousePos.x, -2.45f, 2.45f), 3.87f);
+                _currentFruit.transform.localPosition = mousePos;
+
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                //that means the player has released the fruit, so it will fall
+
+                _currentFruit.AddComponent<Rigidbody2D>();
+                _currentFruit.isDropped = true;
+
+                //we will update the list
+                SpawnLatestFruit();
+
+                //we will make a dropper trail
+            }
+        }
     }
 
     public GameObject GetFruitRefByEnum(FruitType fruitType)
@@ -113,39 +147,32 @@ public class FruitHandler : MonoBehaviour
 
     private void GenerateRandomFruitList()
     {
-        List<GameObject> list = new List<GameObject>(3);
+        Queue<GameObject> list = new Queue<GameObject>(_upcomingSize);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < _upcomingSize; i++)
         {
-            list.Add(GetFruitRefByEnum(GetRandomFruitType()));
+            list.Enqueue(GetFruitRefByEnum(GetRandomFruitType()));
         }
 
-        //we have a list of 3 random fruits now
+        //we have a list of upcoming size random fruits now
         //show them in the upcoming list
 
         _fruitList = list;
         SpawnLatestFruit();
-        OnFruitListGenerated?.Invoke(_fruitList);
+        OnFruitListUpdated?.Invoke(_fruitList);
     }
 
-    private void ShiftFruits()
+    private void SpawnLatestFruit()
     {
-        var temp = _fruitList[1];
-        _fruitList[0] = _fruitList[1];
-        temp = _fruitList[2];
-
-        _fruitList[2] = GetFruitRefByEnum(GetRandomFruitType());
-        OnFruitListGenerated?.Invoke(_fruitList);
+        var frontFruit = _fruitList.Dequeue();
+        _currentFruit = Instantiate(frontFruit, _spawnPoint.position, Quaternion.identity).GetComponent<Fruit>();
+        GenerateNewFruit();
     }
 
-    private GameObject SpawnLatestFruit()
+    public void GenerateNewFruit()
     {
-        var obj = Instantiate(_fruitList[0], _spawnPoint.position, Quaternion.identity);
-
-        ShiftFruits();
-        return obj;
+        _fruitList.Enqueue(GetFruitRefByEnum(GetRandomFruitType()));
+        OnFruitListUpdated?.Invoke(_fruitList);
     }
-
-
     #endregion
 }
