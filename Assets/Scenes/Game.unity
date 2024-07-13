@@ -949,6 +949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameOver: 0
+  scoreIncreaseValue: 15
   OnScoreChanged:
     m_PersistentCalls:
       m_Calls: []

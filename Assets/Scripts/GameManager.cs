@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     private int _score;
     [SerializeField] private bool _gameOver = false;
-
+    public int scoreIncreaseValue;
 
     #endregion
 
@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
     #region Events
 
     public CustomEvents.IntEvent OnScoreChanged;
-    public event Action OnGameStart;
     public event Action OnGameEnd;
 
     #endregion
@@ -66,6 +65,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _gameOver = false;
+        SetScore(0);
     }
 
     public void IncrementScore(int value)
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameOver() => _gameOver;
 
-    public void SetGameOver(bool gameOver) => _gameOver = gameOver;
+    public void SetGameOverTrue() { _gameOver = true; OnGameEnd?.Invoke(); }
 
     #endregion
 

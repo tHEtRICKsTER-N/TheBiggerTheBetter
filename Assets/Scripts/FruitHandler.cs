@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -98,14 +99,19 @@ public class FruitHandler : MonoBehaviour
                 //that means the player has released the fruit, so it will fall
 
                 _currentFruit.AddComponent<Rigidbody2D>();
-                _currentFruit.isDropped = true;
 
-                //we will update the list
-                SpawnLatestFruit();
-
-                //we will make a dropper trail
+                StartCoroutine(SetIsDroppedTrueAndTakeAnotherFruit());
             }
         }
+    }
+
+    private IEnumerator SetIsDroppedTrueAndTakeAnotherFruit()
+    {
+        yield return new WaitForSeconds(1.5f);
+        _currentFruit.isDropped = true;
+
+        //we will update the list
+        SpawnLatestFruit();
     }
 
     public GameObject GetFruitRefByEnum(FruitType fruitType)

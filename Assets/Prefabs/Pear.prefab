@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5400190784697101587}
   m_Layer: 0
   m_Name: Pear
-  m_TagString: Untagged
+  m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,5 +162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 1
-  willBecomeWhenMerged: 0
+  willBecomeWhenMerged: 8
+  type: 7
   fruitSprite: {fileID: 983392274, guid: f2022d38e4279224eb797cbf0d67de86, type: 3}
+  isDropped: 0
+  instanceID: 0

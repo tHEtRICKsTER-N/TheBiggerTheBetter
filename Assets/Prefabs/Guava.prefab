@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 694556032699227834}
   m_Layer: 0
   m_Name: Guava
-  m_TagString: Untagged
+  m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,5 +162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 0.85
-  willBecomeWhenMerged: 0
+  willBecomeWhenMerged: 9
+  type: 8
   fruitSprite: {fileID: -924274794, guid: f2022d38e4279224eb797cbf0d67de86, type: 3}
+  isDropped: 0
+  instanceID: 0
