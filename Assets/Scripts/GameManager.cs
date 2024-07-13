@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -92,6 +93,9 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver() => _gameOver;
 
     public void SetGameOverTrue() { _gameOver = true; OnGameEnd?.Invoke(); }
+
+    public void Restart() { SceneManager.LoadScene(1); Time.timeScale = 1; }
+
 
     #endregion
 
