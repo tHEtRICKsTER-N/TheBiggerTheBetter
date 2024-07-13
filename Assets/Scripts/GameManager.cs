@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     private int _score;
     [SerializeField] private bool _gameOver = false;
     public int scoreIncreaseValue;
+    [SerializeField] private float _bufferTime = 2.5f;
 
     #endregion
 
@@ -56,6 +57,8 @@ public class GameManager : MonoBehaviour
 
     public CustomEvents.IntEvent OnScoreChanged;
     public event Action OnGameEnd;
+    public event Action OnBufferTimeStart;
+    public event Action OnBufferTimeEnd;
 
     #endregion
 
@@ -67,6 +70,12 @@ public class GameManager : MonoBehaviour
         _gameOver = false;
         SetScore(0);
     }
+
+    public void StartBufferTime() => OnBufferTimeStart?.Invoke();
+
+    public void StopBufferTime() => OnBufferTimeEnd?.Invoke();
+
+    public float GetBufferTime() => _bufferTime;
 
     public void IncrementScore(int value)
     {

@@ -64,12 +64,14 @@ public class FruitHandler : MonoBehaviour
 
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private int _upcomingSize;
+    [SerializeField] private float _delayForNextFruit = 0.75f;
 
     [Header("Queue of Upcoming Fruits")]
     private Queue<GameObject> _fruitList = new Queue<GameObject>();
 
     private Fruit _currentFruit;
     Vector2 mousePos;
+    private bool _canTakeMouseInput = true;
 
     #endregion
 
@@ -87,28 +89,40 @@ public class FruitHandler : MonoBehaviour
             //we will try to find a location to drop it
             //fruit will follow the player's finger position
 
-            if (Input.GetMouseButton(0))
+            if (_canTakeMouseInput)
             {
-                mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                mousePos = new Vector2(Mathf.Clamp(mousePos.x, -2.45f, 2.45f), 3.87f);
-                _currentFruit.transform.localPosition = mousePos;
 
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                //that means the player has released the fruit, so it will fall
+                if (Input.GetMouseButton(0))
+                {
+                    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    mousePos = new Vector2(Mathf.Clamp(mousePos.x, -2.45f, 2.45f), 3.87f);
+                    _currentFruit.transform.localPosition = mousePos;
 
-                _currentFruit.AddComponent<Rigidbody2D>();
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    //that means the player has released the fruit, so it will fall
 
-                StartCoroutine(SetIsDroppedTrueAndTakeAnotherFruit());
+                    _canTakeMouseInput = false;
+                    _currentFruit.AddComponent<Rigidbody2D>();
+
+                    //play the sound
+                    SoundManager.Instance.sfxAudioSource.PlayOneShot(SoundManager.Instance.dropSound);
+
+                    StartCoroutine(SetIsDroppedTrueAndTakeAnotherFruit());
+                }
             }
         }
     }
 
+    public void SetCanTakeMouseInput(bool canTakeMouseInput) => _canTakeMouseInput = canTakeMouseInput;
+
     private IEnumerator SetIsDroppedTrueAndTakeAnotherFruit()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(_delayForNextFruit);
         _currentFruit.isDropped = true;
+
+        _canTakeMouseInput = true;
 
         //we will update the list
         SpawnLatestFruit();

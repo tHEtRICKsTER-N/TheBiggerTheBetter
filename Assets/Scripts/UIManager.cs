@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,9 +45,20 @@ public class UIManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Text _scoreText;
     [SerializeField] private List<Image> _upcomingFruitsImageList;
+    [SerializeField] private Text _timeLeft;
+    [SerializeField] private GameObject _timeLeftImage;
+    [SerializeField] private Image _gameOverImage;
+
+    private float _currentBufferTime;
+    private Coroutine _coroutine;
 
     private void OnEnable()
     {
+        _currentBufferTime = GameManager.Instance.GetBufferTime();
+
+        GameManager.Instance.OnGameEnd += SetGameOverUI;
+        GameManager.Instance.OnBufferTimeStart += BufferTimeON;
+        GameManager.Instance.OnBufferTimeEnd += BufferTimeOFF;
         GameManager.Instance.OnScoreChanged.AddListener(UpdateScoreUI);
         FruitHandler.Instance.OnFruitListUpdated.AddListener(UpdateListUI);
     }
@@ -56,8 +68,56 @@ public class UIManager : MonoBehaviour
         if (!this.gameObject.scene.isLoaded)
             return;
 
+        GameManager.Instance.OnGameEnd -= SetGameOverUI;
+        GameManager.Instance.OnBufferTimeStart -= BufferTimeON;
+        GameManager.Instance.OnBufferTimeEnd -= BufferTimeOFF;
         FruitHandler.Instance.OnFruitListUpdated.RemoveListener(UpdateListUI);
         GameManager.Instance.OnScoreChanged.RemoveListener(UpdateScoreUI);
+    }
+
+    private void Start()
+    {
+        _gameOverImage.gameObject.SetActive(false);
+        _timeLeftImage.SetActive(false);
+    }
+
+    private void BufferTimeON()
+    {
+        _coroutine = StartCoroutine(BufferTimeCountdown());
+        _currentBufferTime = GameManager.Instance.GetBufferTime();
+    }
+
+    private void SetGameOverUI() 
+    {
+        Time.timeScale = 0;
+
+        _gameOverImage.gameObject.SetActive(true); 
+        _timeLeftImage.SetActive(false); 
+    }
+
+    private void BufferTimeOFF()
+    {
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
+        _timeLeftImage.SetActive(false);
+    }
+
+    private IEnumerator BufferTimeCountdown()
+    {
+        Debug.Log("Countdown Started !!");
+
+        _timeLeftImage.SetActive(true);
+
+        while (_currentBufferTime > 0)
+        {
+            yield return null;
+            _currentBufferTime -= Time.deltaTime;
+            _timeLeft.text = _currentBufferTime.ToString();
+        }
+
+        GameManager.Instance.SetGameOverTrue();
     }
 
     private void UpdateScoreUI(int _score) { _scoreText.text = _score.ToString(); }

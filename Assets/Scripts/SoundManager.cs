@@ -1,27 +1,88 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+
+    #region Instance
+
+    public static SoundManager _instance;
+
+    // Public property to access the instance
+    public static SoundManager Instance
+    {
+        get
+        {
+            // If the instance doesn't exist, find or create it
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<SoundManager>();
+
+                // If no instance exists in the scene, create a new one
+                if (_instance == null)
+                {
+                    GameObject singletonObject = new GameObject("SoundManager");
+                    _instance = singletonObject.AddComponent<SoundManager>();
+                    DontDestroyOnLoad(singletonObject); // Don't destroy this object when loading new scenes
+                }
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        // Ensure there's only one instance
+        if (_instance != null && _instance != this)
+        {
+            _instance.gameObject.SetActive(false);
+            return;
+        }
+    }
+    #endregion
+
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource _sfxAudioSource;
-    [SerializeField] private AudioSource _bgmAudioSource;
+    public AudioSource sfxAudioSource;
+    public AudioSource bgmAudioSource;
 
     [Header("Audio Clips")]
     [SerializeField] private AudioClip[] _bgmClips;
-    [SerializeField] private AudioClip _buttonSound;
-    [SerializeField] private AudioClip _gameOverSound;
-    [SerializeField] private AudioClip _dropSound;
-    [SerializeField] private AudioClip _mergeSound;
+    public AudioClip buttonSound;
+    public AudioClip gameOverSound;
+    public AudioClip dropSound;
+    public AudioClip mergeSound;
 
     private int currentIndex = 0; // Index to keep track of the current clip
+    private Coroutine _coroutine;
 
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameEnd += GameOverSounds;
+    }
+
+    private void OnDisable()
+    {
+        if (!this.gameObject.scene.isLoaded)
+            return;
+
+        GameManager.Instance.OnGameEnd -= GameOverSounds;
+    }
 
     private void Start()
     {
-        _bgmAudioSource.loop = true;
+        bgmAudioSource.loop = true;
         PlayNextClip();
+    }
+
+    private void GameOverSounds()
+    {
+        StopCoroutine(_coroutine);
+
+        sfxAudioSource.Stop();
+        bgmAudioSource.Stop();
+
+        sfxAudioSource.clip = gameOverSound;
+        sfxAudioSource.Play();
     }
 
     private void PlayNextClip()
@@ -29,11 +90,11 @@ public class SoundManager : MonoBehaviour
         if (currentIndex < _bgmClips.Length)
         {
             // Assign the current clip to the AudioSource
-            _bgmAudioSource.clip = _bgmClips[currentIndex];
+            bgmAudioSource.clip = _bgmClips[currentIndex];
             // Play the audio
-            _bgmAudioSource.Play();
+            bgmAudioSource.Play();
             // Wait for the clip to finish playing
-            StartCoroutine(WaitForClipToEnd());
+            _coroutine = StartCoroutine(WaitForClipToEnd());
         }
         else
         {
@@ -44,7 +105,7 @@ public class SoundManager : MonoBehaviour
 
     private IEnumerator WaitForClipToEnd()
     {
-        while (_bgmAudioSource.isPlaying)
+        while (bgmAudioSource.isPlaying)
         {
             yield return null;
         }
@@ -53,11 +114,6 @@ public class SoundManager : MonoBehaviour
         PlayNextClip();
     }
 
-    public void PlayButtonClickSound()
-    {
-        if (!_sfxAudioSource.isPlaying)
-        {
-            _sfxAudioSource.PlayOneShot(_buttonSound);
-        }
-    }
+    public void PlayButtonClickSound() => sfxAudioSource.PlayOneShot(buttonSound);
+
 }
