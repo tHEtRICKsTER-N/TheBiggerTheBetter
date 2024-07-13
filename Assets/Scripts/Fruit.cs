@@ -10,6 +10,8 @@ public class Fruit : MonoBehaviour
     public Sprite fruitSprite;
     public bool isDropped = false;
     public int instanceID;
+    [SerializeField] private Color _fruitColor;
+
 
     private void Start()
     {
@@ -76,6 +78,11 @@ public class Fruit : MonoBehaviour
                     //Instantiate the new gameObject
                     var newFruit = Instantiate(FruitHandler.Instance.GetFruitRefByEnum(willBecomeWhenMerged), average, Quaternion.identity);
                     newFruit.AddComponent<Rigidbody2D>();
+
+                    //also spawn the effect and instantly destroy it
+                    var effect = Instantiate(FruitHandler.Instance.spawnEffect, newFruit.transform.localPosition, Quaternion.identity);
+                    effect.GetComponent<SpriteRenderer>().material.color = _fruitColor;
+                    Destroy(effect.gameObject, 0.75f);
 
                     //destroy both the fruits
                     Destroy(gameObject);

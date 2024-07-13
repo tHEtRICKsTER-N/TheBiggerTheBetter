@@ -66,6 +66,8 @@ public class FruitHandler : MonoBehaviour
     [SerializeField] private int _upcomingSize;
     [SerializeField] private float _delayForNextFruit = 0.75f;
 
+    public GameObject spawnEffect;
+
     [Header("Queue of Upcoming Fruits")]
     private Queue<GameObject> _fruitList = new Queue<GameObject>();
 

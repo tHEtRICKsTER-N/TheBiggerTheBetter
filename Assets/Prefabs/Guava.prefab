@@ -167,3 +167,4 @@ MonoBehaviour:
   fruitSprite: {fileID: -924274794, guid: f2022d38e4279224eb797cbf0d67de86, type: 3}
   isDropped: 0
   instanceID: 0
+  _fruitColor: {r: 0.078431375, g: 0.36078432, b: 0.27058825, a: 1}
