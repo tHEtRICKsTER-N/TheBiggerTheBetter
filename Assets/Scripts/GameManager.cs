@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -118,5 +117,7 @@ public class GameManager : MonoBehaviour
     public void Restart() { SceneManager.LoadScene(1); Time.timeScale = 1; }
 
     public void QuitGame() => Application.Quit();
+
+    public void MainMenu() => SceneManager.LoadScene(0);
     #endregion
 }

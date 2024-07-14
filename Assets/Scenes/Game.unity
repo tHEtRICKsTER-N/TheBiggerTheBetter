@@ -2174,10 +2174,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1819304233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.09777018, y: 0.381}
-  m_AnchorMax: {x: 0.827, y: 0.794}
-  m_AnchoredPosition: {x: -11.995209, y: 0}
-  m_SizeDelta: {x: -23.9904, y: 0}
+  m_AnchorMin: {x: 0.094000004, y: 0.30628115}
+  m_AnchorMax: {x: 0.906, y: 0.8421566}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &944759505
 MonoBehaviour:
@@ -2981,7 +2981,7 @@ GameObject:
   - component: {fileID: 1418543963}
   - component: {fileID: 1418543965}
   m_Layer: 5
-  m_Name: Quit_button
+  m_Name: MainMenu_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3029,7 +3029,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 1128378414, guid: a400958eb9514234a82dfcc25eff4e9a, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3091,7 +3091,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 34966599}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3686,10 +3686,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1418543962}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.09777018, y: 0.381}
-  m_AnchorMax: {x: 0.827, y: 0.794}
-  m_AnchoredPosition: {x: -11.995209, y: 0}
-  m_SizeDelta: {x: -23.9904, y: 0}
+  m_AnchorMin: {x: 0.094000004, y: 0.30628115}
+  m_AnchorMax: {x: 0.906, y: 0.8421566}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1793967977
 MonoBehaviour:
@@ -3704,7 +3704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6784314, g: 0.14509805, b: 0.21176472, a: 1}
+  m_Color: {r: 0, g: 0.61029863, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3724,7 +3724,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: QUIT
+  m_Text: HOME
 --- !u!222 &1793967978
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3794,7 +3794,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 1128378414, guid: a400958eb9514234a82dfcc25eff4e9a, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

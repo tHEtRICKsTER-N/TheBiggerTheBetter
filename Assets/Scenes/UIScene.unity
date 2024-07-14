@@ -1302,7 +1302,7 @@ GameObject:
   - component: {fileID: 1005423711}
   - component: {fileID: 1005423710}
   m_Layer: 0
-  m_Name: Exit_button
+  m_Name: KnowTheMaker_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2058,7 +2058,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EXIT
+  m_Text: KNOW THE DEV
 --- !u!222 &2096122824
 CanvasRenderer:
   m_ObjectHideFlags: 0
