@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -57,7 +58,8 @@ public class GameManager : MonoBehaviour
     #region Events
 
     public CustomEvents.IntEvent OnScoreChanged;
-    public event Action OnGameEnd;
+    public event Action OnGameLose;
+    public event Action OnGameWin;
     public event Action OnBufferTimeStart;
     public event Action OnBufferTimeEnd;
 
@@ -92,11 +94,29 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameOver() => _gameOver;
 
-    public void SetGameOverTrue() { _gameOver = true; OnGameEnd?.Invoke(); }
+    public void SetGameLoseTrue()
+    {
+        _gameOver = true;
+        OnGameLose?.Invoke();
+        DestroyAllFruits();
+    }
+
+    public void SetGameWinTrue()
+    {
+        _gameOver = true;
+        OnGameWin?.Invoke();
+        DestroyAllFruits();
+    }
+
+    public void DestroyAllFruits()
+    {
+        var fruits = GameObject.FindGameObjectsWithTag("Fruit");
+
+        foreach (var fruit in fruits) Destroy(fruit);
+    }
 
     public void Restart() { SceneManager.LoadScene(1); Time.timeScale = 1; }
 
-
+    public void QuitGame() => Application.Quit();
     #endregion
-
 }

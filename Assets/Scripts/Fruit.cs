@@ -11,6 +11,7 @@ public class Fruit : MonoBehaviour
     public bool isDropped = false;
     public int instanceID;
     [SerializeField] private Color _fruitColor;
+    private GameObject _newFruit;
 
 
     private void Start()
@@ -54,7 +55,7 @@ public class Fruit : MonoBehaviour
             {
                 if (fruit.type == FruitType.BIGPineapple && this.type == FruitType.BIGPineapple)
                 {
-                    GameManager.Instance.SetGameOverTrue();
+                    GameManager.Instance.SetGameWinTrue();
                     Destroy(gameObject);
                     Destroy(collision.gameObject);
                     return;
@@ -76,22 +77,25 @@ public class Fruit : MonoBehaviour
                     Debug.Log("MERGED !!");
 
                     //Instantiate the new gameObject
-                    var newFruit = Instantiate(FruitHandler.Instance.GetFruitRefByEnum(willBecomeWhenMerged), average, Quaternion.identity);
-                    newFruit.AddComponent<Rigidbody2D>();
-
-                    //also spawn the effect and instantly destroy it
-                    var effect = Instantiate(FruitHandler.Instance.spawnEffect, newFruit.transform.localPosition, Quaternion.identity);
-                    effect.GetComponent<SpriteRenderer>().material.color = _fruitColor;
-                    Destroy(effect.gameObject, 0.75f);
+                    _newFruit = Instantiate(FruitHandler.Instance.GetFruitRefByEnum(willBecomeWhenMerged), average, Quaternion.identity);
+                    _newFruit.AddComponent<Rigidbody2D>();
 
                     //destroy both the fruits
                     Destroy(gameObject);
                     Destroy(collision.gameObject);
                 }
             }
-
         }
+    }
 
+    private void OnDestroy()
+    {
+        if (_newFruit != null)
+        {
+            var effect = Instantiate(FruitHandler.Instance.spawnEffect, _newFruit.transform.localPosition, Quaternion.identity);
+            effect.GetComponent<SpriteRenderer>().material.color = _fruitColor;
+            Destroy(effect.gameObject, 0.75f);
+        }
     }
 }
 

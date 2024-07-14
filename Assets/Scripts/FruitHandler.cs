@@ -79,6 +79,22 @@ public class FruitHandler : MonoBehaviour
 
     #region Functions
 
+    private void OnEnable()
+    {
+        if (!this.gameObject.scene.isLoaded)
+            return;
+        GameManager.Instance.OnGameLose += OnGameLose;
+        GameManager.Instance.OnGameWin += OnGameWin;
+    }
+
+    private void OnDisable()
+    {
+        if (!this.gameObject.scene.isLoaded)
+            return;
+        GameManager.Instance.OnGameLose -= OnGameLose;
+        GameManager.Instance.OnGameWin -= OnGameWin;
+    }
+
     private void Start()
     {
         GenerateRandomFruitList();
@@ -118,6 +134,10 @@ public class FruitHandler : MonoBehaviour
     }
 
     public void SetCanTakeMouseInput(bool canTakeMouseInput) => _canTakeMouseInput = canTakeMouseInput;
+
+    private void OnGameLose() => _canTakeMouseInput = false;
+
+    private void OnGameWin() => _canTakeMouseInput = false;
 
     private IEnumerator SetIsDroppedTrueAndTakeAnotherFruit()
     {

@@ -51,13 +51,17 @@ public class SoundManager : MonoBehaviour
     public AudioClip gameOverSound;
     public AudioClip dropSound;
     public AudioClip mergeSound;
+    public AudioClip winGameSound;
 
     private int currentIndex = 0; // Index to keep track of the current clip
     private Coroutine _coroutine;
 
     private void OnEnable()
     {
-        GameManager.Instance.OnGameEnd += GameOverSounds;
+        if (!this.gameObject.scene.isLoaded)
+            return;
+        GameManager.Instance.OnGameLose += GameOverSounds;
+        GameManager.Instance.OnGameWin += GameWinSounds;
     }
 
     private void OnDisable()
@@ -65,7 +69,8 @@ public class SoundManager : MonoBehaviour
         if (!this.gameObject.scene.isLoaded)
             return;
 
-        GameManager.Instance.OnGameEnd -= GameOverSounds;
+        GameManager.Instance.OnGameLose -= GameOverSounds;
+        GameManager.Instance.OnGameWin -= GameWinSounds;
     }
 
     private void Start()
@@ -82,6 +87,18 @@ public class SoundManager : MonoBehaviour
         bgmAudioSource.Stop();
 
         sfxAudioSource.clip = gameOverSound;
+        sfxAudioSource.Play();
+    }
+
+    private void GameWinSounds()
+    {
+        StopCoroutine(_coroutine);
+
+        sfxAudioSource.Stop();
+        bgmAudioSource.Stop();
+
+        sfxAudioSource.clip = winGameSound;
+        sfxAudioSource.loop = true;
         sfxAudioSource.Play();
     }
 

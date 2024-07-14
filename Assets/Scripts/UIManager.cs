@@ -48,15 +48,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _timeLeft;
     [SerializeField] private GameObject _timeLeftImage;
     [SerializeField] private Image _gameOverImage;
+    [SerializeField] private Image _gameWinImage;
 
     private float _currentBufferTime;
     private Coroutine _coroutine;
 
     private void OnEnable()
     {
+        if (!this.gameObject.scene.isLoaded)
+            return;
+
         _currentBufferTime = GameManager.Instance.GetBufferTime();
 
-        GameManager.Instance.OnGameEnd += SetGameOverUI;
+        GameManager.Instance.OnGameLose += SetGameOverUI;
+        GameManager.Instance.OnGameWin += SetGameWinUI;
         GameManager.Instance.OnBufferTimeStart += BufferTimeON;
         GameManager.Instance.OnBufferTimeEnd += BufferTimeOFF;
         GameManager.Instance.OnScoreChanged.AddListener(UpdateScoreUI);
@@ -68,7 +73,8 @@ public class UIManager : MonoBehaviour
         if (!this.gameObject.scene.isLoaded)
             return;
 
-        GameManager.Instance.OnGameEnd -= SetGameOverUI;
+        GameManager.Instance.OnGameLose -= SetGameOverUI;
+        GameManager.Instance.OnGameWin -= SetGameWinUI;
         GameManager.Instance.OnBufferTimeStart -= BufferTimeON;
         GameManager.Instance.OnBufferTimeEnd -= BufferTimeOFF;
         FruitHandler.Instance.OnFruitListUpdated.RemoveListener(UpdateListUI);
@@ -95,6 +101,14 @@ public class UIManager : MonoBehaviour
         _timeLeftImage.SetActive(false); 
     }
 
+    private void SetGameWinUI()
+    {
+        Time.timeScale = 0;
+
+        _gameWinImage.gameObject.SetActive(true);
+        _timeLeftImage.SetActive(false);
+    }
+
     private void BufferTimeOFF()
     {
         if (_coroutine != null)
@@ -117,7 +131,7 @@ public class UIManager : MonoBehaviour
             _timeLeft.text = _currentBufferTime.ToString();
         }
 
-        GameManager.Instance.SetGameOverTrue();
+        GameManager.Instance.SetGameLoseTrue();
     }
 
     private void UpdateScoreUI(int _score) { _scoreText.text = _score.ToString(); }
