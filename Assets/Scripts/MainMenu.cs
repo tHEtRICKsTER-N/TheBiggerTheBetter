@@ -11,4 +11,6 @@ public class MainMenu : MonoBehaviour
     public void QuitGame() => Application.Quit();
 
     public void PlayButtonSound() => _sfxSource.PlayOneShot(_btnSound);
+
+    public void KnowMe() => Application.OpenURL("https://naimish.netlify.app");
 }
