@@ -81,8 +81,7 @@ public class FruitHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!this.gameObject.scene.isLoaded)
-            return;
+
         GameManager.Instance.OnGameLose += OnGameLose;
         GameManager.Instance.OnGameWin += OnGameWin;
     }
@@ -109,7 +108,6 @@ public class FruitHandler : MonoBehaviour
 
             if (_canTakeMouseInput)
             {
-
                 if (Input.GetMouseButton(0))
                 {
                     mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

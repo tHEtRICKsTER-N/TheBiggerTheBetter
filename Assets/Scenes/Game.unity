@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameOver: 0
-  scoreIncreaseValue: 0
+  scoreIncreaseValue: 15
   _bufferTime: 2.5
   OnScoreChanged:
     m_PersistentCalls:

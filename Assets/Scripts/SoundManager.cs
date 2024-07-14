@@ -58,8 +58,7 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!this.gameObject.scene.isLoaded)
-            return;
+
         GameManager.Instance.OnGameLose += GameOverSounds;
         GameManager.Instance.OnGameWin += GameWinSounds;
     }

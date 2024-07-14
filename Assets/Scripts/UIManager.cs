@@ -55,9 +55,6 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!this.gameObject.scene.isLoaded)
-            return;
-
         _currentBufferTime = GameManager.Instance.GetBufferTime();
 
         GameManager.Instance.OnGameLose += SetGameOverUI;
