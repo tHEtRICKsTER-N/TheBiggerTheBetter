@@ -1,3 +1,5 @@
+// To add the scene in the list, just Add your scene to the Build Settings first !
+
 using UnityEditor;
 using UnityEngine;
 using System.IO;
@@ -7,15 +9,15 @@ public class SceneGridEditorWindow : EditorWindow
 {
     private Vector2 scrollPosition;
 
-    [MenuItem("Window/Scene Grid")]
+    [MenuItem("Window/Scene Quick Access")]
     private static void ShowWindow()
     {
-        GetWindow<SceneGridEditorWindow>("Scene Grid");
+        GetWindow<SceneGridEditorWindow>("Scene Quick Access");
     }
 
     private void OnGUI()
     {
-        GUILayout.Label("Scene Grid", EditorStyles.boldLabel);
+        GUILayout.Label("Scene Quick Access", EditorStyles.boldLabel);
 
         // Get all scenes in the build settings
         var scenes = EditorBuildSettings.scenes;

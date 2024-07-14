@@ -58,7 +58,6 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-
         GameManager.Instance.OnGameLose += GameOverSounds;
         GameManager.Instance.OnGameWin += GameWinSounds;
     }
@@ -74,7 +73,6 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        bgmAudioSource.loop = true;
         PlayNextClip();
     }
 

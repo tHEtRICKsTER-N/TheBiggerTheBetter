@@ -49,6 +49,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _timeLeftImage;
     [SerializeField] private Image _gameOverImage;
     [SerializeField] private Image _gameWinImage;
+    [SerializeField] private Text _goodLuckText;
 
     private float _currentBufferTime;
     private Coroutine _coroutine;
@@ -57,6 +58,7 @@ public class UIManager : MonoBehaviour
     {
         _currentBufferTime = GameManager.Instance.GetBufferTime();
 
+        FruitHandler.Instance.OnDelayEnd += GoodLuckOff;
         GameManager.Instance.OnGameLose += SetGameOverUI;
         GameManager.Instance.OnGameWin += SetGameWinUI;
         GameManager.Instance.OnBufferTimeStart += BufferTimeON;
@@ -70,6 +72,7 @@ public class UIManager : MonoBehaviour
         if (!this.gameObject.scene.isLoaded)
             return;
 
+        FruitHandler.Instance.OnDelayEnd -= GoodLuckOff;
         GameManager.Instance.OnGameLose -= SetGameOverUI;
         GameManager.Instance.OnGameWin -= SetGameWinUI;
         GameManager.Instance.OnBufferTimeStart -= BufferTimeON;
@@ -80,9 +83,12 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        _goodLuckText.gameObject.SetActive(true);
         _gameOverImage.gameObject.SetActive(false);
         _timeLeftImage.SetActive(false);
     }
+
+    private void GoodLuckOff() => _goodLuckText.gameObject.SetActive(false);
 
     private void BufferTimeON()
     {
@@ -90,12 +96,12 @@ public class UIManager : MonoBehaviour
         _currentBufferTime = GameManager.Instance.GetBufferTime();
     }
 
-    private void SetGameOverUI() 
+    private void SetGameOverUI()
     {
         Time.timeScale = 0;
 
-        _gameOverImage.gameObject.SetActive(true); 
-        _timeLeftImage.SetActive(false); 
+        _gameOverImage.gameObject.SetActive(true);
+        _timeLeftImage.SetActive(false);
     }
 
     private void SetGameWinUI()

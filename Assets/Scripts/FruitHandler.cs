@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class FruitHandler : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class FruitHandler : MonoBehaviour
     #region Events
 
     public CustomEvents.FruitListEvent OnFruitListUpdated;
+    public event Action OnDelayEnd;
 
     #endregion
 
@@ -81,7 +83,6 @@ public class FruitHandler : MonoBehaviour
 
     private void OnEnable()
     {
-
         GameManager.Instance.OnGameLose += OnGameLose;
         GameManager.Instance.OnGameWin += OnGameWin;
     }
@@ -96,39 +97,49 @@ public class FruitHandler : MonoBehaviour
 
     private void Start()
     {
-        GenerateRandomFruitList();
+        StartCoroutine(DelayStart());
     }
 
     private void Update()
     {
-        if (!_currentFruit.isDropped)
+        if (_currentFruit != null)
         {
-            //we will try to find a location to drop it
-            //fruit will follow the player's finger position
-
-            if (_canTakeMouseInput)
+            if (!_currentFruit.isDropped)
             {
-                if (Input.GetMouseButton(0))
+                //we will try to find a location to drop it
+                //fruit will follow the player's finger position
+
+                if (_canTakeMouseInput)
                 {
-                    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    mousePos = new Vector2(Mathf.Clamp(mousePos.x, -2.45f, 2.45f), 3.87f);
-                    _currentFruit.transform.localPosition = mousePos;
+                    if (Input.GetMouseButton(0))
+                    {
+                        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        mousePos = new Vector2(Mathf.Clamp(mousePos.x, -2.45f, 2.45f), 3.87f);
+                        _currentFruit.transform.localPosition = mousePos;
 
-                }
-                if (Input.GetMouseButtonUp(0))
-                {
-                    //that means the player has released the fruit, so it will fall
+                    }
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        //that means the player has released the fruit, so it will fall
 
-                    _canTakeMouseInput = false;
-                    _currentFruit.AddComponent<Rigidbody2D>();
+                        _canTakeMouseInput = false;
+                        _currentFruit.AddComponent<Rigidbody2D>();
 
-                    //play the sound
-                    SoundManager.Instance.sfxAudioSource.PlayOneShot(SoundManager.Instance.dropSound);
+                        //play the sound
+                        SoundManager.Instance.sfxAudioSource.PlayOneShot(SoundManager.Instance.dropSound);
 
-                    StartCoroutine(SetIsDroppedTrueAndTakeAnotherFruit());
+                        StartCoroutine(SetIsDroppedTrueAndTakeAnotherFruit());
+                    }
                 }
             }
         }
+    }
+
+    private IEnumerator DelayStart()
+    {
+        yield return new WaitForSeconds(1);
+        OnDelayEnd?.Invoke();
+        GenerateRandomFruitList();
     }
 
     public void SetCanTakeMouseInput(bool canTakeMouseInput) => _canTakeMouseInput = canTakeMouseInput;
@@ -181,7 +192,7 @@ public class FruitHandler : MonoBehaviour
     public static FruitType GetRandomFruitType()
     {
         //just to get till apple
-        int randomIndex = Random.Range(1, System.Enum.GetValues(typeof(FruitType)).Length - 5);
+        int randomIndex = UnityEngine.Random.Range(1, System.Enum.GetValues(typeof(FruitType)).Length - 5);
         return (FruitType)randomIndex;
     }
 
