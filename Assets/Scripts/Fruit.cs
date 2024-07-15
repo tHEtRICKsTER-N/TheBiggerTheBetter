@@ -74,7 +74,7 @@ public class Fruit : MonoBehaviour
 
                     //set the score
                     GameManager.Instance.IncrementScore(GameManager.Instance.scoreIncreaseValue);
-                    Debug.Log("MERGED !!");
+                    //Debug.Log("MERGED !!");
 
                     //Instantiate the new gameObject
                     _newFruit = Instantiate(FruitHandler.Instance.GetFruitRefByEnum(willBecomeWhenMerged), average, Quaternion.identity);

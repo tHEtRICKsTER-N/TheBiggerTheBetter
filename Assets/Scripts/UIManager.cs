@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _gameWinImage;
     [SerializeField] private Text _goodLuckText;
 
-    private float _currentBufferTime;
+    private int _currentBufferTime;
     private Coroutine _coroutine;
 
     private void OnEnable()
@@ -92,7 +92,7 @@ public class UIManager : MonoBehaviour
 
     private void BufferTimeON()
     {
-        _coroutine = StartCoroutine(BufferTimeCountdown());
+        StartCoroutine(BufferTimeCountdown());
         _currentBufferTime = GameManager.Instance.GetBufferTime();
     }
 
@@ -114,23 +114,22 @@ public class UIManager : MonoBehaviour
 
     private void BufferTimeOFF()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
+        StopAllCoroutines();
+        GameManager.Instance.SetBufferTime(GameManager.Instance.GetBufferTime());
         _timeLeftImage.SetActive(false);
     }
 
     private IEnumerator BufferTimeCountdown()
     {
-        Debug.Log("Countdown Started !!");
+        //Debug.Log("Countdown Started !!");
+        _timeLeft.text = _currentBufferTime.ToString();
 
         _timeLeftImage.SetActive(true);
 
         while (_currentBufferTime > 0)
         {
-            yield return null;
-            _currentBufferTime -= Time.deltaTime;
+            yield return new WaitForSeconds(1);
+            _currentBufferTime -= 1;
             _timeLeft.text = _currentBufferTime.ToString();
         }
 

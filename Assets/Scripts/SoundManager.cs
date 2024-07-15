@@ -113,7 +113,7 @@ public class SoundManager : MonoBehaviour
         else
         {
             // All clips played, you can handle any logic here (e.g., loop back to the beginning)
-            Debug.Log("All audio clips played!");
+            //Debug.Log("All audio clips played!");
         }
     }
 
