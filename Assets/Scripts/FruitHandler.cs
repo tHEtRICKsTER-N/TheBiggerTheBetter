@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class FruitHandler : MonoBehaviour
 {
