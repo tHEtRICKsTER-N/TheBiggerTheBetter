@@ -1,3 +1,4 @@
+using EasyTransition;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -50,7 +51,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _gameOver = false;
     public int scoreIncreaseValue;
     [SerializeField] private int _bufferTime = 5;
+    [Space]
 
+    [Header("UI References")]
+    [SerializeField] private AnimatedButton _homeButton;
+    [SerializeField] private TransitionSettings[] _transitions;
     #endregion
 
 
@@ -71,6 +76,15 @@ public class GameManager : MonoBehaviour
     {
         _gameOver = false;
         SetScore(0);
+        SetButtonListeners();
+    }
+
+    private void SetButtonListeners()
+    {
+        _homeButton.onClick.AddListener(() =>
+        {
+            TransitionManager.Instance().Transition(0, _transitions[UnityEngine.Random.Range(0, _transitions.Length - 1)], .1f);
+        });
     }
 
     public void StartBufferTime() => OnBufferTimeStart?.Invoke();
