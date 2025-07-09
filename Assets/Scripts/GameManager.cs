@@ -14,19 +14,6 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            // If the instance doesn't exist, find or create it
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<GameManager>();
-
-                // If no instance exists in the scene, create a new one
-                if (_instance == null)
-                {
-                    GameObject singletonObject = new GameObject("GameManager");
-                    _instance = singletonObject.AddComponent<GameManager>();
-                    DontDestroyOnLoad(singletonObject); // Don't destroy this object when loading new scenes
-                }
-            }
             return _instance;
         }
     }
