@@ -544,43 +544,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 62776610}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 859968339}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 781209141}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: PlayButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &119088573
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,18 +694,18 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<size=120%><b><color=#F9C80E>The main goal of the game is to</color></b></size> 
-    \r\n<size=150%><b><color=#F86624>MERGE TWO BIG PINEAPPLES!</color></b></size> 
+  m_Text: "<size=110%><b><color=#F9C80E>The main goal of the game is to</color></b></size> 
+    \r\n<size=125%><b><color=#F86624>MERGE TWO BIG PINEAPPLES!</color></b></size> 
     \r\n<size=100%>That\u2019s how you <b><color=#3D348B>win</color></b> the game!
     \U0001F34D</size>\r\n\r\n<color=#43BCCD>When two fruits of the same type collide,</color> 
     \r\nthey <b>merge</b> and become a <b><color=#E94F37>bigger fruit</color></b>!
-    \U0001F353 \u27A1\uFE0F \U0001F349\r\n\r\n<size=105%><b>You can check the order
-    of the fruits</b>  \r\nfrom the <color=#00B295>bottom of the screen</color>. 
-    \r\nThey are listed in <i><color=#FF7F11>increasing order</color></i>.</size>\r\n\r\n<size=110%><color=#6A0572>Each
+    \U0001F353 \u27A1 \U0001F349\r\n\r\n<size=103%><b>You can check the order of
+    the fruits</b>  \r\nfrom the <color=#00B295>bottom of the screen</color>.  \r\nThey
+    are listed in <i><color=#FF7F11>increasing order</color></i>.</size>\r\n\r\n<size=105%><color=#6A0572>Each
     merge will score you</color> <b><color=#FFD700>15 points!</color></b> \U0001F3AF</size>\r\n\r\n<b><color=#5BC0BE>Happy
-    Merging!</color></b>  \r\n<i>And remember...</i>\r\n\r\n<size=115%><b><color=#EF476F>\u201CThe
+    Merging!</color></b>  \r\n<i>And remember...</i>\r\n\r\n<size=110%><b><color=#EF476F>\u201CThe
     BIGGER they are, the HARDER they FALL.\u201D</color></b></size> \U0001F4A5\r\n\r\n<b>Naimish</b> 
-    \r\n<i>rishunaimish@gmail.com</i>\r\n"
+    \r\n<i>naimish.framer.ai</i>\r"
 --- !u!222 &135311112
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1900,8 +1864,10 @@ GameObject:
   - component: {fileID: 859968340}
   - component: {fileID: 859968342}
   - component: {fileID: 859968341}
+  - component: {fileID: 859968344}
+  - component: {fileID: 859968343}
   m_Layer: 5
-  m_Name: Instructions_image
+  m_Name: Instructions_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1966,6 +1932,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859968339}
   m_CullTransparentMesh: 1
+--- !u!114 &859968343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859968339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ac79f7dda59da4ea0144659936e89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animateScale: 1
+  animateFade: 1
+  duration: 0.25
+  easeType: 1
+  openScale: {x: 1, y: 1, z: 1}
+  closedScale: {x: 0, y: 0, z: 0}
+  openAlpha: 1
+  closedAlpha: 0
+  closeButton: {fileID: 62776612}
+  scrollRect: {fileID: 453582387}
+  contentToRebuild: {fileID: 1588943063}
+--- !u!225 &859968344
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859968339}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &914300029
 GameObject:
   m_ObjectHideFlags: 0
@@ -3001,6 +3002,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0126e1e0c6c2a04895d564bd230dfb9, type: 2}
   - {fileID: 11400000, guid: 9710edcf009d00943af961dd2a7ca7d3, type: 2}
   - {fileID: 11400000, guid: 3ad3e86dc386e60458fda4c93a2c3d62, type: 2}
+  _instructionsPanel: {fileID: 859968343}
 --- !u!1 &2096122821
 GameObject:
   m_ObjectHideFlags: 0

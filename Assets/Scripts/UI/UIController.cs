@@ -22,7 +22,11 @@ public class UIController : MonoBehaviour
     [SerializeField] private AnimatedButton _quitButton;
     [SerializeField] private AnimatedButton _instructionsButton;
     [Space]
+    [Header("Transitions Refs for Scene Transition")]
     [SerializeField] private TransitionSettings[] _transitions;
+    [Space]
+    [Header("Panels Refs")]
+    [SerializeField] private AnimatedPanel _instructionsPanel;
 
     private void Start()
     {
@@ -39,7 +43,7 @@ public class UIController : MonoBehaviour
         _knowTheDevButton.onClick.AddListener(() => { Application.OpenURL("https:://naimish.framer.ai"); });
         _instructionsButton.onClick.AddListener(() =>
         {
-
+            _instructionsPanel.gameObject.SetActive(true);
         });
 
         _quitButton.onClick.AddListener(() => { Application.Quit(); });
